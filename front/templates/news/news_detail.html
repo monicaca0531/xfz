@@ -1,0 +1,70 @@
+{% extends 'base/font_base.html' %}
+{% load news_filters %}
+
+{% block title %}
+新闻详情页面
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/news/news_detail.min.css' %}">
+    <script src="{% static 'arttemplate/template-web.js'%}"></script>
+    <script src="{% static 'js/news_detail.min.js' %}"></script>
+<script id="comment-item" type="text/html">
+{% verbatim %}
+<li>
+    <div class="comment-info">
+        <img src="https://static-image.xfz.cn/1552965456_492.jpg-member.photo" alt="" class="avatar">
+        <span class="author">{{ comment.author.username }}</span>
+        <span class="pub-time">{{ comment.pub_time|timeSince }}</span>
+    </div>
+    <div class="comment-content">{{ comment.content }}</div>
+</li>
+{% endverbatim %}
+</script>
+{% endblock %}
+
+{% block main %}
+    <div class="main">
+        <div class="wraper">
+            <div class="main-content-wraper">
+                <div class="news-wraper">
+                    <h1 class="title">{{ news.title }}</h1>
+                    <div class="news-info">
+                        <div class="info-group">
+                            <span class="author">{{ news.author.username }}</span>
+                            <span class="pub-time">{{ news.pub_time|time_since }}</span>
+                            <span class="category">{{ news.category.name }}</span>
+                        </div>
+                        <div class="share-group">
+                            <span>分享至：</span>
+                            <a class="weixin share-item"></a>
+                            <a href="#" class="weibo share-item"></a>
+                        </div>
+                    </div>
+                    <article class="article">{{ news.content|safe }}</article>
+                </div>
+                <div class="comment-wraper">
+                    <h3 class="title">文章评论（0）</h3>
+                    <textarea name="comment" class="comment-textarea logined-textarea"
+                              placeholder="立即登录，参与评论~"></textarea>
+                    <div class="submit-btn-group">
+                        <button class="submit-btn" data-news-id="{{ news.id }}">立即评论</button>
+                    </div>
+                    <ul class="comment-list">
+                        {% for comment in news.comments.all %}
+                            <li>
+                                <div class="comment-info">
+                                    <img src="https://static-image.xfz.cn/1552965456_492.jpg-member.photo" alt="" class="avatar">
+                                    <span class="author">{{ comment.author.username }}</span>
+                                    <span class="pub-time">{{ comment.pub_time|time_since }}</span>
+                                </div>
+                                <div class="comment-content">{{ comment.content }}</div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% include 'common/sidebar_wraper.html' %}
+        </div>
+    </div>
+{% endblock %}
