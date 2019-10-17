@@ -74,5 +74,5 @@ gulp.task("bs",function () {
 });
 
 //创建默认监听窗口
-// gulp.task("default",['bs','watch']);
-gulp.task("default",['watch']);
+gulp.task("default",['bs','watch']);
+// gulp.task("default",['watch']);
